@@ -1,0 +1,68 @@
+---
+title: "My Project"
+format: gfm
+---
+
+<!-- README.md is generated from README.Rmd. Please edit that file -->
+
+```{r, include = FALSE}
+knitr::opts_chunk$set(
+  collapse = TRUE,
+  comment = "#>",
+  fig.path = "man/figures/README-",
+  out.width = "100%"
+)
+```
+
+# dockr
+
+<!-- badges: start -->
+<!-- badges: end -->
+
+The goal of dockr is to provide access to the Docker API using only R (no Python, Go or system calls).
+The main use case so far is to parse Docker Compose files, pull create and run images and control them.
+Not all compose options are implemented yet!
+
+## Installation
+
+You can install the development version of dockr like so:
+
+``` r
+remotes::install_github("JBGruber/dockr")
+```
+
+## Example
+
+Say you have a Docker Compose file that spins up several containers.
+The package includes a very simple one for testing:
+
+```{r example}
+readLines(system.file("extdata/docker-compose.yml", package = "dockr")) |> 
+  cat()
+```
+
+You can start the container defined here by:
+
+```{r}
+library(dockr)
+compose_up(compose = system.file("extdata/docker-compose.yml", package = "dockr"))
+```
+
+To check on your containers, you can use:
+
+
+```{r}
+docker_lc()
+```
+
+To stop and remove this container and the underlying image, use:
+
+```{r}
+# stop container
+docker_stop("test")
+# remove container
+docker_rmc("test")
+# remove image
+docker_rmi("redis:alpine")
+```
+

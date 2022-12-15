@@ -1,0 +1,10 @@
+services:
+  test:
+    image: "redis:alpine"
+    container_name: "test"
+    ports:
+      - "8000:5000"
+    command: ["sleep", "120"]
+
+networks:
+  test-net:

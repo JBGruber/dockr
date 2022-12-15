@@ -1,0 +1,20 @@
+Package: dockr
+Type: Package
+Title: Controlling Docker from R
+Version: 0.0.1.9000
+Authors@R: person("Johannes", "Gruber", email = "johannesb.gruber@gmail.com",
+  role = c("aut", "cre"))
+Description: R bindings for the Docker API, which can be used as an alternative 
+    to command line calls or Docker Compose.
+License: GPL-3
+Depends:
+    R (>= 4.1.0)
+Imports:
+    httr2,
+    praise,
+    yaml,
+    jsonlite,
+    tibble,
+    methods
+Encoding: UTF-8
+RoxygenNote: 7.2.2
