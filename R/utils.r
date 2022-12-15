@@ -68,10 +68,15 @@ return_status <- function(type, sts) {
 }
 
 
-# check functions
+
 #' Ping Docker daemon
 #'
-#' Fails if Docker daemon is not reachable
+#' Fails if Docker daemon is not reachable. On Unix systems, you want to either
+#' run Docker in rootless mode (
+#' \href{https://docs.docker.com/engine/install/linux-postinstall/}{see the
+#' Docker documentation}) or start R with sudo for the correct priviliges. On
+#' Windows, you should expose daemon on tcp://localhost:2375 without TLS (e.g.,
+#' from Docker Desktop setting).
 #'
 #' @export
 docker_ping <- function() {
@@ -82,7 +87,7 @@ docker_ping <- function() {
       httr2::req_perform()
   )
   if (methods::is(res, "try-error")) {
-    stop("The Docker daemon is not reachble")
+    stop("The Docker daemon is not reachble (check if it is running and if you have the correct permissions)")
   }
   invisible(!methods::is(res, "try-error"))
 }

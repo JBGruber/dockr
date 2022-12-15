@@ -7,5 +7,10 @@
 docker_ping()
 }
 \description{
-Fails if Docker daemon is not reachable
+Fails if Docker daemon is not reachable. On Unix systems, you want to either
+run Docker in rootless mode (
+\href{https://docs.docker.com/engine/install/linux-postinstall/}{see the
+Docker documentation}) or start R with sudo for the correct priviliges. On
+Windows, you should expose daemon on tcp://localhost:2375 without TLS (e.g.,
+from Docker Desktop setting).
 }

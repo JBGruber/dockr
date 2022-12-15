@@ -13,7 +13,7 @@ coverage](https://codecov.io/gh/JBGruber/dockr/branch/main/graph/badge.svg)](htt
 
 The goal of dockr is to provide access to the Docker API using only R
 (no Python, Go or system calls). The main use case so far is to parse
-Docker Compose files, pull create and run images and control them. Not
+Docker Compose files, pull, create and run images and control them. Not
 all compose options are implemented yet!
 
 ## Installation
@@ -58,10 +58,10 @@ To check on your containers, you can use:
 
 ``` r
 docker_lc()
-#> # A tibble: 1 × 5
-#>   name  image        status                id                              ports
-#>   <chr> <chr>        <chr>                 <chr>                           <chr>
-#> 1 test  redis:alpine Up Less than a second a1e0a05551ed33ecb5e371d0e340bc… "lis…
+#> # A tibble: 4 × 5
+#>   name         image                                          status id    ports
+#>   <chr>        <chr>                                          <chr>  <chr> <chr>
+#> 1 test         redis:alpine                                   Up Le… 9a7b… "lis…
 ```
 
 To stop and remove this container and the underlying image, use:

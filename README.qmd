@@ -25,7 +25,7 @@ dockr::docker_rmi("redis:alpine")
 <!-- badges: end -->
 
 The goal of dockr is to provide access to the Docker API using only R (no Python, Go or system calls).
-The main use case so far is to parse Docker Compose files, pull create and run images and control them.
+The main use case so far is to parse Docker Compose files, pull, create and run images and control them.
 Not all compose options are implemented yet!
 
 ## Installation
