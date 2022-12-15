@@ -1,22 +1,27 @@
 ---
-title: "My Project"
+title: "dockr"
 format: gfm
 ---
 
 <!-- README.md is generated from README.Rmd. Please edit that file -->
 
-```{r, include = FALSE}
+```{r, include = FALSE, message = FALSE}
 knitr::opts_chunk$set(
   collapse = TRUE,
   comment = "#>",
   fig.path = "man/figures/README-",
   out.width = "100%"
 )
+# remove leftover container and images
+dockr::docker_rmc("test", force = TRUE)
+dockr::docker_rmi("redis:alpine")
 ```
 
-# dockr
 
 <!-- badges: start -->
+[![Lifecycle: experimental](https://img.shields.io/badge/lifecycle-experimental-orange.svg)](https://lifecycle.r-lib.org/articles/stages.html#experimental)
+[![R-CMD-check](https://github.com/JBGruber/dockr/actions/workflows/R-CMD-check.yaml/badge.svg)](https://github.com/JBGruber/dockr/actions/workflows/R-CMD-check.yaml)
+[![Codecov test coverage](https://codecov.io/gh/JBGruber/dockr/branch/main/graph/badge.svg)](https://codecov.io/gh/JBGruber/dockr?branch=main)
 <!-- badges: end -->
 
 The goal of dockr is to provide access to the Docker API using only R (no Python, Go or system calls).
@@ -38,6 +43,7 @@ The package includes a very simple one for testing:
 
 ```{r example}
 readLines(system.file("extdata/docker-compose.yml", package = "dockr")) |> 
+  paste(collapse = "\n") |> 
   cat()
 ```
 

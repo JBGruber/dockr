@@ -19,6 +19,12 @@ docker_start <- function(id) {
 }
 
 
+#' Stop container
+#'
+#' @param id ID or name of the container
+#' @param kill_after Number of seconds to wait before killing the container
+#'
+#' @export
 docker_stop <- function(id, kill_after = 60L) {
 
   req <- docker_base_req() |>
@@ -57,7 +63,7 @@ docker_stop <- function(id, kill_after = 60L) {
 docker_exec <- function(id, cmd) {
 
   # make exec instance
-  req <- docker_base_req(verbose = FALSE) |>
+  req <- docker_base_req() |>
     httr2::req_url_path_append("containers", id, "exec") |>
     httr2::req_method("post") |>
     httr2::req_error(is_error = function(resp) FALSE) |>
@@ -72,7 +78,7 @@ docker_exec <- function(id, cmd) {
     httr2::resp_body_json()
 
   # run instance
-  req2 <- docker_base_req(verbose = TRUE) |>
+  req2 <- docker_base_req() |>
     httr2::req_url_path_append("exec", res$Id, "start") |>
     httr2::req_method("post") |>
     httr2::req_error(is_error = function(resp) FALSE) |>

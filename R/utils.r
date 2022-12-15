@@ -124,7 +124,7 @@ docker_lc <- function(..., all = FALSE) {
     ports = s_pull(res, "Ports")
   )
   out$name = gsub("^/", "", out$name)
-
+  return(out)
 }
 
 

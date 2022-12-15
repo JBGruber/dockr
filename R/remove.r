@@ -1,4 +1,10 @@
-## remove images
+#' Remove a Docker image
+#'
+#' @param image Image name or ID
+#' @param force Remove the image even if it is being used by stopped containers or has other tags
+#' @param noprune Do not delete untagged parent images
+#'
+#' @export
 docker_rmi <- function(image, force = FALSE, noprune = FALSE) {
 
   req <- docker_base_req() |>
@@ -16,7 +22,14 @@ docker_rmi <- function(image, force = FALSE, noprune = FALSE) {
 
 }
 
-## remove containers
+
+#' Remove a Docker container
+#'
+#' @param container ID or name of the container.
+#' @param force If the container is running, kill it before removing it.
+#' @param link Remove the specified link associated with the container.
+#'
+#' @export
 docker_rmc <- function(container, force = FALSE, link = FALSE) {
 
   req <- docker_base_req() |>

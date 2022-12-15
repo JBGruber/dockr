@@ -4,7 +4,7 @@ docker_create_image <- function(image, verbose = FALSE) {
   if (is.null(image)) stop("name can not be NULL")
 
   # create image
-  req <- docker_base_req(verbose = verbose) |>
+  req <- docker_base_req() |>
     httr2::req_url_path_append("images/create") |>
     httr2::req_url_query(fromImage = image) |>
     httr2::req_method("post") |>
@@ -13,7 +13,7 @@ docker_create_image <- function(image, verbose = FALSE) {
   res <- httr2::req_perform(req)
 
   if (!is.null(res$body)) res <- httr2::resp_body_raw(res)
-  return_status(3L, res)
+  if (verbose) return_status(3L, res)
 }
 
 docker_create_container <- function(name, body) {
