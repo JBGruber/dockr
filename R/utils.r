@@ -67,6 +67,13 @@ return_status <- function(type, sts) {
   }
 }
 
+resp_body_message <- function(x) {
+  dat <- httr2::resp_body_raw(x)
+  lines <- readBin(dat, "character", n = length(dat) / 4)
+  lines <- gsub("[^[:alnum:][:blank:]?&/\\-]", "", lines[lines != ""], perl = TRUE)
+  return(lines[lines != ""])
+}
+
 
 
 #' Ping Docker daemon

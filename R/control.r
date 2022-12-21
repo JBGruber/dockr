@@ -89,8 +89,8 @@ docker_exec <- function(id, cmd) {
 
   res2 <- httr2::req_perform(req2)
   if (length(res2$body) > 0) {
-    message(httr2::resp_body_string(res2))
+    for (m in resp_body_message(res2)) cli::cli_alert_info(m, wrap = TRUE)
   }
-
+  invisible(res2)
 }
 
