@@ -14,8 +14,8 @@ parse_yml <- function(x) {
   compose$services <- lapply(compose$services, function(s) {
 
     # rename
-    pattern <- c("image", "networks", "environment", "command", "ports")
-    replacement <- c("Image", "NetworkMode", "Env", "Cmd", "PortBindings")
+    pattern <- c("image", "networks", "environment", "command", "ports", "volumes", "restart")
+    replacement <- c("Image", "NetworkMode", "Env", "Cmd", "PortBindings", "Binds", "RestartPolicy")
     for(i in seq_along(pattern)) names(s) <- gsub(pattern[i], replacement[i], names(s), fixed = TRUE)
 
     # reformat some special arguments
@@ -30,6 +30,16 @@ parse_yml <- function(x) {
         env <- paste0(names(s$Env), "=", s$Env)
         s$Env <- as.list(env)
       }
+    }
+    if ("Binds" %in% names(s)) {
+      if (grepl("~", s$Binds, fixed = TRUE)) {
+        local <- normalizePath(gsub(":.+$", "", s$Binds))
+        s$Binds <- gsub("^.+?(?=:)", local, s$Binds, perl = TRUE)
+      }
+      s$Binds <- I(s$Binds)
+    }
+    if ("RestartPolicy" %in% names(s)) {
+      s$RestartPolicy <- list(Name = s$RestartPolicy)
     }
 
     return(s)
