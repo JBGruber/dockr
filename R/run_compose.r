@@ -51,7 +51,9 @@ compose_up <- function(compose, force_install = FALSE) {
   # create containers
   ids <- lapply(config$services, function(service)
     if (!service$container_name %in% containers)
-      docker_create_container(name = service$container_name, body = service))
+      docker_create_container(name = service$container_name, body = service)
+    else
+      return(NA))
 
   if (any(sapply(ids, is.null))) stop("container(s) ", toString(names(ids)[sapply(ids, is.null)]), " could not be created")
 
