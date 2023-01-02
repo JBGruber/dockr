@@ -9,9 +9,9 @@
 #' parse_yml(system.file("extdata/docker-compose.yml", package = "dockr"))
 parse_yml <- function(x) {
 
-  compose <- yaml::read_yaml(x)
+  config <- yaml::read_yaml(x, readLines.warn = FALSE)
 
-  compose$services <- lapply(compose$services, function(s) {
+  config$services <- lapply(config$services, function(s) {
 
     # rename
     pattern <- c("image", "networks", "environment", "command", "ports", "volumes", "restart")
@@ -42,12 +42,21 @@ parse_yml <- function(x) {
       s$RestartPolicy <- list(Name = s$RestartPolicy)
     }
 
+    # collect HostConfig params
+    s$HostConfig <- list(
+      NetworkMode = s$NetworkMode,
+      PortBindings = s$PortBindings
+    )
+    s$HostConfig <- s$HostConfig[lengths(s$HostConfig) != 0]
+    s$NetworkMode <- NULL
+    s$PortBindings <- NULL
+
     return(s)
   })
 
-  compose$version <- NULL
-  class(compose) <- c("docker_config", class(compose))
-  return(compose)
+  config$version <- NULL
+  class(config) <- c("docker_config", class(config))
+  return(config)
 }
 
 
