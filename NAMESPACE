@@ -2,6 +2,7 @@
 
 export(compose_up)
 export(docker_exec)
+export(docker_inspect_container)
 export(docker_lc)
 export(docker_li)
 export(docker_ln)

@@ -109,6 +109,7 @@ docker_ping <- function() {
   invisible(!methods::is(res, "try-error"))
 }
 
+# safe pull string from list
 s_pull <- function(x, ...) {
   vapply(x, function(x) ifelse(length(x[[...]]) == 0, "", toString(x[[...]])), character(1))
 }
@@ -212,8 +213,15 @@ docker_ln <- function(...) {
 }
 
 
-# mainly used to translate json options from running containers
-docker_inspect_container <- function(id, as_json = TRUE) {
+#' Inspect Docker container
+#'
+#' Retrieves existing container as json string
+#'
+#' @param id ID or name of container.
+#' @param parse parse json string
+#'
+#' @export
+docker_inspect_container <- function(id, parse = FALSE) {
 
   req <- docker_base_req() |>
     httr2::req_url_path_append("containers", id, "json") |>
@@ -222,10 +230,10 @@ docker_inspect_container <- function(id, as_json = TRUE) {
 
   res <- httr2::req_perform(req)
 
-  if (as_json) {
-    return(httr2::resp_body_string(res))
-  } else {
+  if (parse) {
     return(httr2::resp_body_json(res))
+  } else {
+    return(httr2::resp_body_string(res))
   }
 
 }
