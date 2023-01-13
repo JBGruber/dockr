@@ -11,7 +11,9 @@ parse_yml <- function(x) {
 
   config <- yaml::read_yaml(x, readLines.warn = FALSE)
 
-  config$services <- lapply(config$services, function(s) {
+  # first service is started last in accordance to compose conventions which put
+  # the frontend first
+  config$services <- lapply(rev(config$services), function(s) {
 
     # rename
     pattern <- c("image", "networks", "environment", "command", "ports", "volumes", "restart")
